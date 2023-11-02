@@ -30,27 +30,13 @@ mongoose
 
 //Configs
 var corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "*",
   credentials: true,
   optionSuccessStatus: 200,
 };
 
 //enable cors
 app.use(cors(corsOptions));
-
-app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "X-Requested-With,content-type, Accept"
-  );
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  next();
-});
 
 // parse requests of content-type - application/json
 app.use(express.json({ limit: "50mb" }));
@@ -66,15 +52,8 @@ app.use(cookieParser());
 //public folder
 app.use("/public", express.static(path.join(__dirname, "./app/public")));
 
-//swagger-ui init
-app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
-
 //Routes
-app.use("/api/user", userRoutes);
-
-app.get("/", (req, res) => {
-  res.send("Welcome to SE project");
-});
+app.use(userRoutes);
 
 const PORT = process.env.PORT || 8080;
 

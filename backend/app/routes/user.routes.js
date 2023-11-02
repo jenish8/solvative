@@ -5,14 +5,12 @@ const router = express.Router();
 //controller
 const controller = require("../controllers/user.controller");
 
-router.use(function (req, res, next) {
-  res.header(
-    "Access-Control-Allow-Headers",
-    "x-access-token, Origin, Content-Type, Accept"
-  );
-  next();
-});
-
-router.get("/", controller.testRequest);
+router.get("/", controller.listAllUsers);
+router.get("/:id", controller.listSingleUser);
+router.post("/new", controller.createNewUser);
+router.patch("/:id", controller.updateUser);
+router.delete("/:id", controller.deleteUser);
+router.patch("/:id/update/reward", controller.updateReward);
+router.patch("/:id/update/revert-reward", controller.revertReward);
 
 module.exports = router;
